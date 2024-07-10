@@ -1,7 +1,6 @@
 #include <iostream>
-#include <stdio.h>
 using namespace std;
-int main {
-	cout << "Cho Tan";
+int main () {
+	cout <<"Cho Tan"<<endl;
 	return 0;
 }
