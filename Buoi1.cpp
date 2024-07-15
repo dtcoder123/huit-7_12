@@ -177,6 +177,27 @@ void xuatMang(int *k, int n) {
     }
     cout << endl;
 }
+//Cau 7f:
+void xuatSoCucDai(int *k, int n) {
+    if (n <= 1) {
+        cout << "Khong co so cuc dai trong mang vi mang co it hon 2 phan tu." << endl;
+        return;
+    }
+
+    cout << "Cac so cuc dai trong mang la: ";
+    for (int i = 1; i < n - 1; i++) {
+        if (k[i] > k[i - 1] && k[i] > k[i + 1]) {
+            cout << k[i] << " ";
+        }
+    }
+    if (k[0] > k[1]) {
+        cout << k[0] << " ";
+    }
+    if (k[n - 1] > k[n - 2]) {
+        cout << k[n - 1] << " ";
+    }
+    cout << endl;
+}
 
 //-------------------------------------------------------------------------------------------
 int main () {
@@ -190,35 +211,38 @@ int main () {
 	int namnghihuu;
 	cout << "Bai Lam:"<<endl;
 //---------------------------------------------------
-//	cout << "Bai 5:"<<endl;
-//	int result = TinhToan(a,b,c);
-//	cout << result;
-//	cout << endl;
+	cout << "Bai 5:"<<endl;
+	int result = TinhToan(a,b,c);
+	cout << result;
+	cout << endl;
 //---------------------------------------------------
-//	cout << "Bai 6:"<<endl;
-//	ThoiGianNghiHuu(hovaten,gioitinh,ngaysinh,thangsinh,namsinh,tuoi,namnghihuu);
+	cout << "Bai 6:"<<endl;
+	ThoiGianNghiHuu(hovaten,gioitinh,ngaysinh,thangsinh,namsinh,tuoi,namnghihuu);
 //---------------------------------------------------
 	srand(time(NULL));
 	int *k;
     int n;
-//  	nhapM1C_SoNguyen(k, n);
-//    cout << "Mang truoc khi xoa phan tu co gia tri 0:";
-//    xuatM1C_SoNguyen(k, n);
-//    xoaPhanTuKhong(k, n);
-//    cout << "\nMang sau khi xoa phan tu co gia tri 0:";
-//    xuatM1C_SoNguyen(k, n);
-//    timPhanTuLonNhat(k, n);
-//    timPhanTuChanLe(k, n);
-//     int x = 2011; 
-//    themPhanTuSauDauTien(k, n, x);
-//    cout << "\nMang sau khi them phan tu " << x << " sau phan tu dau tien:";
-//    xuatM1C_SoNguyen(k, n);
-//    free(k); // Giai phong bo nho da cap phat
-//-----------------------------
+  	nhapM1C_SoNguyen(k, n);
+    cout << "Mang truoc khi xoa phan tu co gia tri 0:";
+    xuatM1C_SoNguyen(k, n);
+    xoaPhanTuKhong(k, n);
+    cout << "\nMang sau khi xoa phan tu co gia tri 0:";
+    xuatM1C_SoNguyen(k, n);
+    timPhanTuLonNhat(k, n);
+    timPhanTuChanLe(k, n);
+     int x = 2011; 
+    themPhanTuSauDauTien(k, n, x);
+    cout << "\nMang sau khi them phan tu " << x << " sau phan tu dau tien:";
+    xuatM1C_SoNguyen(k, n);
+    free(k); // Giai phong bo nho da cap phat
+    cout << endl;
+
     nhapMang(k, n);
     xuatMang(k, n);
     int tong = tongSoChinhPhuong(k, n);
     cout << "Tong cac so chinh phuong trong mang la: " << tong << endl;
-    delete[] k;
+    xuatSoCucDai(k, n);
+//------------------------------------------------------------------------------
+
 	return 0;
 }
