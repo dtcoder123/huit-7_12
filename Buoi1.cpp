@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 using namespace std;
 //Bai 5 Tinh c/(a-b)
 int TinhToan(int a,int b,int c){
@@ -48,7 +51,39 @@ void ThoiGianNghiHuu(char hovaten[30],char gioitinh[5],int ngaysinh,int thangsin
 	catch(char gioitinh[5]){
 		cout << "Gioi tinh khong phai nam/nu";
 	}
+	cin.ignore(2);
 	cout << hovaten << " gioi tinh " << gioitinh << " sinh ngay " << ngaysinh <<"/"<< thangsinh <<"/"<< namsinh << ".Hien tai(nam 2024) da " << tuoi << "tuoi. Thoi gian duoc nghi huu la thang "<< thangsinh <<"/"<< namnghihuu <<endl;
+}
+//-------------------------------------------------------------------------------------------
+//Bai 7:
+void nhapM1C_SoNguyen(int *&k, int &n) {
+    n = 10;
+    k = (int *)malloc(n * sizeof(int));
+    if (k == NULL) {
+        cout << "Khong the cap phat bo nho" << endl;
+        exit(1);
+    }
+    for (int i = 0; i < n; i++) {
+        *(k + i) = rand() % 100;
+    }
+}
+
+void xuatM1C_SoNguyen(int *k, int n) {
+    for (int i = 0; i < n; i++) {
+        cout << "\nPhan tu thu " << i << " co gia tri " << *(k + i) << " va dia chi o nho la " << (k + i);
+        cout << "\nPhan tu thu " << i << " co gia tri " << k[i] << " va dia chi o nho la " << (k + i);
+    }
+}
+
+void timPhanTuLonNhat(int *k, int n) {
+    if (n <= 0) return; 
+    int solonnhat = 0;
+    for (int i = 1; i < n; i++) {
+        if (k[i] > k[solonnhat]) {
+            solonnhat = i;
+        }
+    }
+    cout << "\nPhan tu lon nhat la " << k[solonnhat] << " tai dia chi o nho la " << (k + solonnhat);
 }
 //-------------------------------------------------------------------------------------------
 int main () {
@@ -62,11 +97,20 @@ int main () {
 	int namnghihuu;
 	cout << "Bai Lam:"<<endl;
 //---------------------------------------------------
-//	cout << "Bai 5:"<<endl;
-//	int result = TinhToan(a,b,c);
-//	cout << result;
+	cout << "Bai 5:"<<endl;
+	int result = TinhToan(a,b,c);
+	cout << result;
+	cout << endl;
 //---------------------------------------------------
 	cout << "Bai 6:"<<endl;
 	ThoiGianNghiHuu(hovaten,gioitinh,ngaysinh,thangsinh,namsinh,tuoi,namnghihuu);
+//---------------------------------------------------
+	srand(time(NULL));
+	int *k;
+    int n;
+    nhapM1C_SoNguyen(k, n);
+    xuatM1C_SoNguyen(k, n);
+    timPhanTuLonNhat(k, n);
+    free(k); // Giai phong bo nho da cap phat
 	return 0;
 }
