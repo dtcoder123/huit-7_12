@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <cmath>
 using namespace std;
 //Bai 5 Tinh c/(a-b)
 int TinhToan(int a,int b,int c){
@@ -145,6 +146,38 @@ void themPhanTuSauDauTien(int *&k, int &n, int x) {
     k = newArray;
     n += 1;
 }
+//Cau 7e:
+bool isPerfectSquare(int num) {
+    int sqrtNum = (int)sqrt(num);
+    return (sqrtNum * sqrtNum == num);
+}
+int tongSoChinhPhuong(int *k, int n) {
+    int tong = 0;
+    for (int i = 0; i < n; i++) {
+        if (isPerfectSquare(*(k + i))) {
+            tong += *(k + i);
+        }
+    }
+    return tong;
+}
+void nhapMang(int *&k, int &n) {
+    cout << "Nhap so luong phan tu cua mang: ";
+    cin >> n;
+    k = new int[n];
+    cout << "Nhap cac phan tu cua mang:\n";
+    for (int i = 0; i < n; i++) {
+        cout << "Phan tu thu " << i << ": ";
+        cin >> k[i];
+    }
+}
+void xuatMang(int *k, int n) {
+    cout << "Cac phan tu cua mang:\n";
+    for (int i = 0; i < n; i++) {
+        cout << k[i] << " ";
+    }
+    cout << endl;
+}
+
 //-------------------------------------------------------------------------------------------
 int main () {
 	int a,b,c;
@@ -157,30 +190,35 @@ int main () {
 	int namnghihuu;
 	cout << "Bai Lam:"<<endl;
 //---------------------------------------------------
-	cout << "Bai 5:"<<endl;
-	int result = TinhToan(a,b,c);
-	cout << result;
-	cout << endl;
+//	cout << "Bai 5:"<<endl;
+//	int result = TinhToan(a,b,c);
+//	cout << result;
+//	cout << endl;
 //---------------------------------------------------
-	cout << "Bai 6:"<<endl;
-	ThoiGianNghiHuu(hovaten,gioitinh,ngaysinh,thangsinh,namsinh,tuoi,namnghihuu);
+//	cout << "Bai 6:"<<endl;
+//	ThoiGianNghiHuu(hovaten,gioitinh,ngaysinh,thangsinh,namsinh,tuoi,namnghihuu);
 //---------------------------------------------------
 	srand(time(NULL));
 	int *k;
     int n;
-  	nhapM1C_SoNguyen(k, n);
-    cout << "Mang truoc khi xoa phan tu co gia tri 0:";
-    xuatM1C_SoNguyen(k, n);
-    xoaPhanTuKhong(k, n);
-    cout << "\nMang sau khi xoa phan tu co gia tri 0:";
-    xuatM1C_SoNguyen(k, n);
-    timPhanTuLonNhat(k, n);
-    timPhanTuChanLe(k, n);
-     int x = 2011; 
-    themPhanTuSauDauTien(k, n, x);
-    cout << "\nMang sau khi them phan tu " << x << " sau phan tu dau tien:";
-    xuatM1C_SoNguyen(k, n);
-    free(k); // Giai phong bo nho da cap phat
-    
+//  	nhapM1C_SoNguyen(k, n);
+//    cout << "Mang truoc khi xoa phan tu co gia tri 0:";
+//    xuatM1C_SoNguyen(k, n);
+//    xoaPhanTuKhong(k, n);
+//    cout << "\nMang sau khi xoa phan tu co gia tri 0:";
+//    xuatM1C_SoNguyen(k, n);
+//    timPhanTuLonNhat(k, n);
+//    timPhanTuChanLe(k, n);
+//     int x = 2011; 
+//    themPhanTuSauDauTien(k, n, x);
+//    cout << "\nMang sau khi them phan tu " << x << " sau phan tu dau tien:";
+//    xuatM1C_SoNguyen(k, n);
+//    free(k); // Giai phong bo nho da cap phat
+//-----------------------------
+    nhapMang(k, n);
+    xuatMang(k, n);
+    int tong = tongSoChinhPhuong(k, n);
+    cout << "Tong cac so chinh phuong trong mang la: " << tong << endl;
+    delete[] k;
 	return 0;
 }
