@@ -129,6 +129,22 @@ void xoaPhanTuKhong(int *&k, int &n) {
     n = newSize;
     k = (int *)realloc(k, n * sizeof(int));
 }
+//Cau 7d:
+void themPhanTuSauDauTien(int *&k, int &n, int x) {
+    int *newArray = (int *)malloc((n + 1) * sizeof(int));
+    if (newArray == NULL) {
+        cout << "Khong the cap phat bo nho" << endl;
+        exit(1);
+    }
+    newArray[0] = k[0];
+    newArray[1] = x;
+    for (int i = 1; i < n; i++) {
+        newArray[i + 1] = k[i];
+    }
+    free(k);
+    k = newArray;
+    n += 1;
+}
 //-------------------------------------------------------------------------------------------
 int main () {
 	int a,b,c;
@@ -152,7 +168,7 @@ int main () {
 	srand(time(NULL));
 	int *k;
     int n;
-  nhapM1C_SoNguyen(k, n);
+  	nhapM1C_SoNguyen(k, n);
     cout << "Mang truoc khi xoa phan tu co gia tri 0:";
     xuatM1C_SoNguyen(k, n);
     xoaPhanTuKhong(k, n);
@@ -160,7 +176,10 @@ int main () {
     xuatM1C_SoNguyen(k, n);
     timPhanTuLonNhat(k, n);
     timPhanTuChanLe(k, n);
-    
+     int x = 2011; 
+    themPhanTuSauDauTien(k, n, x);
+    cout << "\nMang sau khi them phan tu " << x << " sau phan tu dau tien:";
+    xuatM1C_SoNguyen(k, n);
     free(k); // Giai phong bo nho da cap phat
     
 	return 0;
