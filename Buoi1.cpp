@@ -118,6 +118,17 @@ void timPhanTuChanLe(int *k, int n) {
         cout << "\nKhong co phan tu le trong mang";
     }
 }
+//Cau 7c:
+void xoaPhanTuKhong(int *&k, int &n) {
+    int newSize = 0;
+    for (int i = 0; i < n; i++) {
+        if (k[i] != 0) {
+            k[newSize++] = k[i];
+        }
+    }
+    n = newSize;
+    k = (int *)realloc(k, n * sizeof(int));
+}
 //-------------------------------------------------------------------------------------------
 int main () {
 	int a,b,c;
@@ -141,10 +152,15 @@ int main () {
 	srand(time(NULL));
 	int *k;
     int n;
-    nhapM1C_SoNguyen(k, n);
+  nhapM1C_SoNguyen(k, n);
+    cout << "Mang truoc khi xoa phan tu co gia tri 0:";
+    xuatM1C_SoNguyen(k, n);
+    xoaPhanTuKhong(k, n);
+    cout << "\nMang sau khi xoa phan tu co gia tri 0:";
     xuatM1C_SoNguyen(k, n);
     timPhanTuLonNhat(k, n);
     timPhanTuChanLe(k, n);
+    
     free(k); // Giai phong bo nho da cap phat
     
 	return 0;
