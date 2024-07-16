@@ -17,43 +17,41 @@ int TinhToan(int a,int b,int c){
 }
 //Bai 6: Viet chuong trinh nhap ho va ten, ngay sinh, gioi tinh cua nguoi lao dong.Hay tinh thoi gian nguoi lao dong duoc nghi huu ,biet rang tuoi huu cua nam gioi
 // la du 62 tuoi va nu la du 60 tuoi
-void ThoiGianNghiHuu(char hovaten[30],char gioitinh[5],int ngaysinh,int thangsinh,int namsinh,int tuoi,int namnghihuu){
-	cin.ignore(1);
-	cout << "Nhap vao ho ten nguoi lao dong:";
-	cin.getline(hovaten,30);
-	cout << "Nhap vao ngay sinh:";
-	cin >> ngaysinh;
-	cout << "Nhap vao thang sinh:";
-	cin >> thangsinh;
-	cout << "Nhap vao nam sinh:";
-	cin >> namsinh; 		
-	cin.ignore(1);
-	cout << "Nhap vao gioi tinh (Nam/Nu/Khac):";
-	cin.getline(gioitinh,5);
-	cin.ignore(1);
-	tuoi = 2024 - namsinh;
-	if (gioitinh == "Nam"){
-		namnghihuu = 62 + namsinh;
-	}
-	if (gioitinh == "Nu"){
-		namnghihuu = 60 + namsinh;
-	}
-	try{
-		if (tuoi < 18 || tuoi >60){
-			throw 101;
-		}
-		if (gioitinh == "Khac"){
-			throw "errcode";
-		}
-	}
-	catch (int tuoi){
-		cout << "Do tuoi khong phai do tuoi lao dong"<<endl;
-	}
-	catch(char gioitinh[5]){
-		cout << "Gioi tinh khong phai nam/nu";
-	}
-	cin.ignore(2);
-	cout << hovaten << " gioi tinh " << gioitinh << " sinh ngay " << ngaysinh <<"/"<< thangsinh <<"/"<< namsinh << ".Hien tai(nam 2024) da " << tuoi << "tuoi. Thoi gian duoc nghi huu la thang "<< thangsinh <<"/"<< namnghihuu <<endl;
+void ThoiGianNghiHuu(char hovaten[30], char gioitinh[5], int ngaysinh, int thangsinh, int namsinh, int tuoi, int& namnghihuu) {
+    cin.ignore(1);
+    cout << "Nhap vao ho ten nguoi lao dong: ";
+    cin.getline(hovaten, 30);
+    cout << "Nhap vao ngay sinh: ";
+    cin >> ngaysinh;
+    cout << "Nhap vao thang sinh: ";
+    cin >> thangsinh;
+    cout << "Nhap vao nam sinh: ";
+    cin >> namsinh;         
+    cin.ignore(1);
+    cout << "Nhap vao gioi tinh (Nam/Nu/Khac): ";
+    cin.getline(gioitinh, 5);
+
+    tuoi = 2024 - namsinh;
+    if (strcmp(gioitinh, "Nam") == 0) {
+        namnghihuu = 62 + namsinh;
+    } else if (strcmp(gioitinh, "Nu") == 0) {
+        namnghihuu = 60 + namsinh;
+    }
+
+    try {
+        if (tuoi < 18 || tuoi > 60) {
+            throw 101;
+        }
+        if (strcmp(gioitinh, "Khac") == 0) {
+            throw "errcode";
+        }
+    } catch (int e) {
+        cout << "Do tuoi khong phai do tuoi lao dong" << endl;
+    } catch (const char* e) {
+        cout << "Gioi tinh khong phai nam/nu" << endl;
+    }
+
+    cout << hovaten << " gioi tinh " << gioitinh << " sinh ngay " << ngaysinh << "/" << thangsinh << "/" << namsinh << ". Hien tai (nam 2024) da " << tuoi << " tuoi. Thoi gian duoc nghi huu la thang " << thangsinh << "/" << namnghihuu << endl;
 }
 //-------------------------------------------------------------------------------------------
 //Bai 7:
@@ -360,7 +358,84 @@ void XuatMang(int *arr, int n) {
     }
     cout << endl;
 }
-
+//------------------------------------------------------------------------------------------
+//Cau 8:
+struct PhanSo {
+    int tu;
+    int mau;
+};
+void nhapPhanSo(PhanSo &ps) {
+    cout << "Nhap tu so: ";
+    cin >> ps.tu;
+    do {
+        cout << "Nhap mau so (mau so phai khac 0): ";
+        cin >> ps.mau;
+        if (ps.mau == 0) {
+            cout << "Mau so phai khac 0. Vui long nhap lai.\n";
+        }
+    } while (ps.mau == 0);
+}
+void xuatPhanSo(const PhanSo &ps) {
+    cout << ps.tu << "/" << ps.mau << endl;
+}
+void nhapMangPhanSo(PhanSo *arr, int n) {
+    for (int i = 0; i < n; ++i) {
+        cout << "Nhap phan so thu " << i + 1 << ":\n";
+        nhapPhanSo(arr[i]);
+    }
+}
+void xuatMangPhanSo(const PhanSo *arr, int n) {
+    for (int i = 0; i < n; ++i) {
+        xuatPhanSo(arr[i]);
+    }
+}
+void xuatPhanSoMauLonHonTu(const PhanSo *arr, int n) {
+    for (int i = 0; i < n; ++i) {
+        if (arr[i].mau > arr[i].tu) {
+            xuatPhanSo(arr[i]);
+        }
+    }
+}
+int demPhanSoTuMauChan(const PhanSo *arr, int n) {
+    int count = 0;
+    for (int i = 0; i < n; ++i) {
+        if (arr[i].tu % 2 == 0 && arr[i].mau % 2 == 0) {
+            count++;
+        }
+    }
+    return count;
+}
+int UCLN(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+void rutGonPhanSo(PhanSo &ps) {
+    int ucln = UCLN(ps.tu, ps.mau);
+    ps.tu /= ucln;
+    ps.mau /= ucln;
+}
+PhanSo tinhTichPhanSo(const PhanSo *arr, int n) {
+    PhanSo tich = {1, 1};
+    for (int i = 0; i < n; ++i) {
+        tich.tu *= arr[i].tu;
+        tich.mau *= arr[i].mau;
+    }
+    rutGonPhanSo(tich);
+    return tich;
+}
+PhanSo timPhanSoLonNhat(const PhanSo *arr, int n) {
+    PhanSo max = arr[0];
+    for (int i = 1; i < n; ++i) {
+        if (static_cast<double>(arr[i].tu) / arr[i].mau > static_cast<double>(max.tu) / max.mau) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
 //-------------------------------------------------------------------------------------------
 int main () {
 	int a,b,c;
@@ -419,36 +494,65 @@ int main () {
 //    cout << "chuoi sau khi chuyen sang chu hoa: " << st << endl;
 //    strcpy(st, " ");
 //	capitalizeWords(st);
-	 int *arr, n;
-    NhapMang(arr, n);
+//	 int *arr, n;
+//    NhapMang(arr, n);
+//
+//    XuatMang(arr, n);
+//
+//    xuatSoCucTieu(arr, n);
+//
+//    int viTriXoa;
+//    cout << "Nhap vi tri can xoa: ";
+//    cin >> viTriXoa;
+//    xoaPhanTuTaiViTri(arr, n, viTriXoa);
+//    XuatMang(arr, n);
+//
+//    int x, viTriThem;
+//    cout << "Nhap gia tri can them: ";
+//    cin >> x;
+//    cout << "Nhap vi tri can them: ";
+//    cin >> viTriThem;
+//    themPhanTuTaiViTri(arr, n, x, viTriThem);
+//    XuatMang(arr, n);
+//    chuyenChanLe(arr, n);
+//    cout << "Mang sau khi chuyen so chan len dau va so le xuong cuoi: ";
+//    XuatMang(arr, n);
+//
+//    if (kiemTraChanLeXenKe(arr, n)) {
+//        cout << "Mang co chua chan le xen ke." << endl;
+//    } else {
+//        cout << "Mang khong chua chan le xen ke." << endl;
+//    }
+//
+//    delete[] arr;
+ 	int n;
+    cout << "Nhap so luong phan so: ";
+    cin >> n;
 
-    XuatMang(arr, n);
+    PhanSo *arr = new PhanSo[n];
+    nhapMangPhanSo(arr, n);
 
-    xuatSoCucTieu(arr, n);
+    cout << "Mang phan so vua nhap:\n";
+    xuatMangPhanSo(arr, n);
 
-    int viTriXoa;
-    cout << "Nhap vi tri can xoa: ";
-    cin >> viTriXoa;
-    xoaPhanTuTaiViTri(arr, n, viTriXoa);
-    XuatMang(arr, n);
+    cout << "Cac phan so co mau so lon hon tu so:\n";
+    xuatPhanSoMauLonHonTu(arr, n);
 
-    int x, viTriThem;
-    cout << "Nhap gia tri can them: ";
-    cin >> x;
-    cout << "Nhap vi tri can them: ";
-    cin >> viTriThem;
-    themPhanTuTaiViTri(arr, n, x, viTriThem);
-    XuatMang(arr, n);
+    cout << "So phan so co tu va mau so chan: " << demPhanSoTuMauChan(arr, n) << endl;
 
-    chuyenChanLe(arr, n);
-    cout << "Mang sau khi chuyen so chan len dau va so le xuong cuoi: ";
-    XuatMang(arr, n);
-
-    if (kiemTraChanLeXenKe(arr, n)) {
-        cout << "Mang co chua chan le xen ke." << endl;
-    } else {
-        cout << "Mang khong chua chan le xen ke." << endl;
+    for (int i = 0; i < n; ++i) {
+        rutGonPhanSo(arr[i]);
     }
+    cout << "Mang phan so sau khi rut gon:\n";
+    xuatMangPhanSo(arr, n);
+
+    PhanSo tich = tinhTichPhanSo(arr, n);
+    cout << "Tich cac phan so trong mang: ";
+    xuatPhanSo(tich);
+
+    PhanSo max = timPhanSoLonNhat(arr, n);
+    cout << "Phan so lon nhat trong mang: ";
+    xuatPhanSo(max);
 
     delete[] arr;
 	return 0;
