@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <cstring>
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -233,7 +233,36 @@ void Bai3() {
     cout << "\nDia chi cua b: " << static_cast<void*>(pb);
     Bai9(pa, pb);
 }
+//-------------------------------------------------------------------------------------------
+//	Cau 10:
 
+void printChars(const char *st) {
+    while (*st != '\0') {
+        cout << *st << ' ';
+        st++;
+    }
+    cout << endl;
+}
+
+void toUpperCase(char *st) {
+    while (*st != '\0') {
+        *st = toupper((unsigned char) *st);
+        st++;
+    }
+}
+
+void capitalizeWords(char *st) {
+    bool newWord = true;
+    while (*st != '\0') {
+        if (isspace((unsigned char) *st)) {
+            newWord = true;
+        } else if (newWord) {
+            *st = toupper((unsigned char) *st);
+            newWord = false;
+        }
+        st++;
+    }
+}
 //-------------------------------------------------------------------------------------------
 int main () {
 	int a,b,c;
@@ -279,7 +308,18 @@ int main () {
 //    cout << "Tong cac so chinh phuong trong mang la: " << tong << endl;
 //    xuatSoCucDai(k, n);
 //------------------------------------------------------------------------------
-	cout << "Cau 9"<<endl;
-	Bai3();
+//	cout << "Cau 9"<<endl;
+//	Bai3();
+//------------------------------------------------------------------------------
+//	cout <<"Cau 10"<<endl;
+	char st[100];
+    cout << "nhap vao chuoi: ";
+    cin.getline(st, sizeof(st));
+    cout << "cac ky tu trong chuoi la: ";
+    printChars(st);
+    toUpperCase(st);
+    cout << "chuoi sau khi chuyen sang chu hoa: " << st << endl;
+    strcpy(st, " ");
+	capitalizeWords(st);
 	return 0;
 }
